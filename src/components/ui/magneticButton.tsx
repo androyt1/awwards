@@ -15,11 +15,12 @@ export const MagneticButton = ({
   onClick,
   href,
 }: MagneticButtonProps) => {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
     const mouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const { left, top, width, height } = el.getBoundingClientRect();
@@ -32,10 +33,13 @@ export const MagneticButton = ({
         ease: "elastic.out(1, 0.3)",
       });
     };
+
     const mouseLeave = () =>
       gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+
     el.addEventListener("mousemove", mouseMove);
     el.addEventListener("mouseleave", mouseLeave);
+
     return () => {
       el.removeEventListener("mousemove", mouseMove);
       el.removeEventListener("mouseleave", mouseLeave);
@@ -44,9 +48,13 @@ export const MagneticButton = ({
 
   const Component = href ? "a" : "button";
 
+  const setRef = (el: HTMLElement | null) => {
+    ref.current = el;
+  };
+
   return (
     <Component
-      ref={ref}
+      ref={setRef}
       href={href}
       onClick={onClick}
       className={cn(
