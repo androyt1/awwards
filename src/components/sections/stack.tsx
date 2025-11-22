@@ -21,6 +21,7 @@ export const Stack = () => {
                 "TypeScript",
                 "GSAP / Three.js",
                 "Tailwind CSS",
+                "React Native / Expo",
               ],
             },
             {
